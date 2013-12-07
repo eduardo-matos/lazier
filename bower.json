@@ -1,0 +1,9 @@
+{
+  "name": "lazier",
+  "version": "1.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine": "latest",
+    "dojo": "~1.9.1"
+  }
+}

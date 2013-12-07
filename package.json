@@ -1,0 +1,8 @@
+{
+    "name": "lazier",
+    "version": "1.0.0",
+    "homepage": "http://github.com/eduardo-matos/lazier",
+    "description": "Lazyload of images for Dojo Toolkit library",
+
+    "dependencies": {}
+}

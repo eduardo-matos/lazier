@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+    <title>Demo</title>
+    <style type="text/css">
+        [data-lazyload-original], img {
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+    <script>
+        var dojoConfig = {
+            baseUrl: '../src',
+            cacheBust: true,
+            tlmSiblingOfDojo: false,
+            async: true,
+            paths: {
+                spec: '../test/spec',
+                lazier: '../src',
+                dojo: '../bower_components/dojo',
+            }
+        };
+    </script>
+  <script src="../bower_components/dojo/dojo.js"></script>
+  <script>
+    require(['lazier/lazyload', 'dojo/query', 'lazier/effects/fade'], function(lazyload, query, fade){
+        lazyload(query('img'), {fx: fade});
+    });
+  </script>
+</head>
+<body>
+    <div>
+        <p>Should load if min-width: 600px (and inside the fold)</p>
+        <img data-lazyload-original="img.gif" width="200" height="200" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-lazyload-media="screen and (min-width: 600px)">
+    </div>
+
+    <div>
+        <p>Should load if min-width: 800px (and inside the fold)</p>
+        <img data-lazyload-original="img.gif" width="200" height="200" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-lazyload-media="screen and (min-width: 800px)">
+    </div>
+
+    <div>
+        <p>Should load if min-width: 1000px (and inside the fold)</p>
+        <img data-lazyload-original="img.gif" width="200" height="200" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-lazyload-media="screen and (min-width: 1000px)">
+    </div>
+
+    <div>
+        <p>Should load if min-width: 1500px (and inside the fold)</p>
+        <img data-lazyload-original="img.gif" width="200" height="200" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-lazyload-media="screen and (min-width: 1500px)">
+    </div>
+</body>
+</html>
