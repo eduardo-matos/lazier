@@ -49,6 +49,46 @@ require(['lazier/lazyload', 'dojo/query'], function (lazyload, query) {
 });
 ```
 
+You can also use you own effects when loading the images. It's a function that receives the dom being loaded as the `this` variable, and should return ny object with a play function (which will be executed when then dom is loaded).
+
+```javascript
+require(['lazier/lazyload', 'dojo/query', 'lazier/effects/fade', 'dojo/fx'], function (lazyload, query, fade, fx) {
+
+    // Builtin lazier effect
+    query('.lazy').lazyload({
+        fx: fade
+    });
+
+    // Dojo effect
+    query('.lazy').lazyload({
+        fx: function () {
+            return fx.wipeIn({
+                node: this,
+                duration: 300
+            })
+        }
+    });
+
+    // Custom effect
+    query('.lazy').lazyload({
+        fx: function () {
+            var node = this;
+
+            // loading image...
+            node.style.opacity = 0;
+
+            return {
+
+                // image loaded!
+                play: function () {
+                    node.style.opacity = 0.5;
+                }
+            }
+        }
+    });
+});
+```
+
 #### Options
 **threshold _(int)_**: Load images before you reach them. It's an integer number of pixels.
 
