@@ -1,5 +1,5 @@
 # Lazier
-[Dojo](http://dojotoolkit.org/) lazyload module that also works with media queries (when supported by the browser). You'll never need to load an big image on mobile ever again!
+[Dojo](http://dojotoolkit.org/) lazyload module that also works with media queries (when supported by the browser). You'll never need to load a big image on mobile ever again!
 
 ### Getting Started
 
@@ -49,7 +49,7 @@ require(['lazier/lazyload', 'dojo/query'], function (lazyload, query) {
 });
 ```
 
-You can also use you own effects when loading the images. It's a function that receives the dom being loaded as the `this` variable, and should return ny object with a play function (which will be executed when then dom is loaded).
+You can also use you own effects when loading the images. It's a function that receives the dom being loaded as the `this` variable, and should return any object with a play function (which will be executed when then dom is loaded).
 
 ```javascript
 require(['lazier/lazyload', 'dojo/query', 'lazier/effects/fade', 'dojo/fx'], function (lazyload, query, fade, fx) {
