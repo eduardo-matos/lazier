@@ -1,5 +1,6 @@
 define([
     'dojo/_base/lang',
+    'dojo/_base/array',
     'dojo/window',
     'dojo/dom-geometry',
     'dojo/dom-construct',
@@ -10,6 +11,7 @@ define([
     'dojo/NodeList'
 ], function(
     lang,
+    array,
     win,
     geometry,
     domConstruct,
@@ -67,14 +69,21 @@ define([
                 winCoords.b = winCoords.t + winCoords.h;
 
                 _elems = _elems.filter(function (imageNode) {
-                    var media = domAttr.get(imageNode, options.mediaAttr) || '',
-                        elemPosition = geometry.position(imageNode);
+                    var mediaList = (domAttr.get(imageNode, options.mediaAttr) || '').split(/\s*,\s*/),
+                        elemPosition = geometry.position(imageNode),
+                        srcList,
+                        currentSrc;
 
                     elemPosition.t = elemPosition.y;
                     elemPosition.b = elemPosition.t + elemPosition.h;
 
-                    if (matchMedia(media).matches && isInsideFold(elemPosition, winCoords, options.threshold)) {
-                        _loadImage(imageNode);
+                    if (isInsideFold(elemPosition, winCoords, options.threshold)) {
+                        srcList = domAttr.get(imageNode, options.srcAttr).split(/\s*,\s*/);
+                        currentSrc = _getFirstMatchingSrcByMediaList(srcList, mediaList);
+
+                        if(currentSrc) {
+                            _loadImage(imageNode, currentSrc);
+                        }
                         return false;
                     }
 
@@ -88,18 +97,42 @@ define([
                 }
             }
 
-            function _loadImage(imageNode) {
+            function _getFirstMatchingSrcByMediaList (srcList, mediaList) {
+                var src;
+
+                // No configured media. Return first image
+                if(!mediaList[0]) {
+                    return srcList[0];
+                }
+
+                // First try: get src with same index of the first matching media
+                array.forEach(mediaList, function (media, index) {
+                    if(matchMedia(media).matches) {
+                        src = srcList[index];
+                        return false;
+                    }
+                });
+
+                if(src) {
+                    return src;
+                }
+
+                // Second try: if srcList length is greater than mediaList length, then we have a fallback src
+                if(srcList.length > mediaList.length) {
+                    return srcList[mediaList.length];
+                }
+            }
+
+            function _loadImage(imageNode, src) {
                 var effect;
 
-                if (domAttr.has(imageNode, options.srcAttr)) {
-                    imageNode.src = domAttr.get(imageNode, options.srcAttr);
+                imageNode.src = src;
 
-                    if(options.fx) {
-                        effect = options.fx.call(imageNode);
-                        on.once(imageNode, 'load', function() {
-                            effect.play();
-                        });
-                    }
+                if(options.fx) {
+                    effect = options.fx.call(imageNode);
+                    on.once(imageNode, 'load', function() {
+                        effect.play();
+                    });
                 }
 
             }

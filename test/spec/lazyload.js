@@ -174,6 +174,7 @@ function(
 
             // act
             var handler = lazyload(elem);
+            console.log(elem);
 
             // assert
             expect(query('img[src="/test/spacer.gif"]').length).toEqual(1);
@@ -211,6 +212,36 @@ function(
 
             // assert
             expect(query('img[src="/test/spacer.gif"]').length).toEqual(1);
+
+            // cleanup
+            dc.destroy(elem);
+            handler.destroy();
+        });
+
+        it('should load the correct image when there are multiple media queries/sources', function() {
+            // arrange
+            var elem = dc.place('<img data-lazyload-original="/test/spacer.gif, /test/spacer2.gif" data-lazyload-media="screen and (max-width: 1px), screen and (min-width: 1px)">', body);
+
+            // act
+            var handler = lazyload(elem);
+
+            // assert
+            expect(query('img[src="/test/spacer2.gif"]').length).toEqual(1);
+
+            // cleanup
+            dc.destroy(elem);
+            handler.destroy();
+        });
+
+        it('should load fallback image if there in no media queries that match', function() {
+            // arrange
+            var elem = dc.place('<img data-lazyload-original="/test/spacer.gif,/test/spacer2.gif" data-lazyload-media="screen and (max-width: 1px)">', body);
+
+            // act
+            var handler = lazyload(elem);
+
+            // assert
+            expect(query('img[src="/test/spacer2.gif"]').length).toEqual(1);
 
             // cleanup
             dc.destroy(elem);
