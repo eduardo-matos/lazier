@@ -1,6 +1,6 @@
 {
   "name": "lazier",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "src/lazyload.js",
   "dependencies": {
     "dojo": "~1.9.1"
