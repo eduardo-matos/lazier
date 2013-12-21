@@ -7,7 +7,31 @@ The HTML:
 
 ```html
 <!-- the 'src' attribute of this image is a transparent gif. It's inline to avoid an HTTP request -->
-<img data-lazyload-original="img.gif" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+<img
+    data-lazyload-original="img.gif"
+    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+>
+
+<!-- with media query constraint -->
+<img
+    data-lazyload-original="img.gif"
+    data-lazyload-media="screen and (min-width: 300px)"
+    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+>
+
+<!-- with multiple media query constraints -->
+<img
+    data-lazyload-original="img.gif, img2.gif"
+    data-lazyload-media="screen and (max-width: 500px), screen and (max-width: 1200px)"
+    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+>
+
+<!-- with fallback image (when none of the media queries match) -->
+<img
+    data-lazyload-original="img.gif, img2.gif"
+    data-lazyload-media="screen and (max-width: 500px)"
+    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+>
 ```
 
 The JavaScript:
